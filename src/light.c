@@ -1,4 +1,5 @@
 #include "light.h"
+#include "globals.h"
 
 #include "libopencm3/stm32/timer.h"
 
@@ -9,6 +10,7 @@ const color_t BLUE = {0, 0, 255};
 const color_t PURPLE = {180, 0, 255};
 const color_t DARKGREEN = {80, 220, 0};
 const color_t CYAN = {0, 170, 255};
+const color_t OFF = {0, 0, 0};
 
 
 color_t *cycle_cols[] = {
@@ -59,5 +61,18 @@ void cycle_colors(void)
 {
     static int index = -1;
     index++;
-    set_color(*cycle_cols[index % 7]);
+    transition_to_color(*cycle_cols[index % 7]);
+}
+
+void transition_to_color(color_t to)
+{
+    for (int i=0; i < 255; i++)
+    {
+        current_color.r = current_color.r + (to.r > current_color.r) - (to.r < current_color.r);
+        current_color.g = current_color.g + (to.g > current_color.g) - (to.g < current_color.g);
+        current_color.b = current_color.b + (to.b > current_color.b) - (to.b < current_color.b);
+        update_pwm();
+        delay(5000);
+    }
+    set_color(to); 
 }

@@ -79,3 +79,13 @@ void setup_standby_mode(void)
     PWR_CR |= PWR_CR_PDDS;        // power down deep sleep
     PWR_CSR |= PWR_CSR_EWUP;      // enable wakeup pin
 }
+
+void set_all_pins_analog_in(void)
+{
+    rcc_periph_clock_enable(RCC_GPIOA);
+    rcc_periph_clock_enable(RCC_GPIOB);
+    rcc_periph_clock_enable(RCC_GPIOC);
+    GPIOA_CRL = 0;
+    GPIOB_CRL = 0;
+    GPIOC_CRL = 0;
+}

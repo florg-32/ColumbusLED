@@ -9,9 +9,6 @@
 #include "globals.h"
 #include "light.h"
 
-void short_delay(void);
-void long_delay(void);
-
 int main(void)
 {
     rcc_clock_setup_in_hsi_out_48mhz();
@@ -25,7 +22,7 @@ int main(void)
     timer_enable_counter(TIM3);
     timer_enable_counter(TIM4);
 
-    set_color(WARM);
+    set_color(OFF);
     while (step_brightness(10)) // ramp up brightness
     {
         short_delay();
@@ -109,17 +106,19 @@ void tim4_isr(void)
     }
 }
 
-void short_delay(void)
+void delay(unsigned int cycles)
 {
-    for (int i = 0; i < 100000; i++)
+    for (unsigned int i = 0; i < cycles; i++)
     {
         __asm__("nop");
     }
 }
+
+void short_delay(void)
+{
+    delay(100000);
+}
 void long_delay(void)
 {
-    for (int i = 0; i < 10; i++)
-    {
-        short_delay();
-    }
+    delay(1000000);
 }

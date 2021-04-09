@@ -10,6 +10,7 @@ typedef struct {
 
 void set_color(color_t col);
 void cycle_colors(void);
+void transition_to_color(color_t to);
 
 int step_brightness(int16_t step);
 
