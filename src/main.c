@@ -14,15 +14,13 @@ int main(void)
     rcc_clock_setup_in_hsi_out_48mhz();
     rcc_periph_clock_enable(RCC_PWR);
 
-    rcc_periph_clock_enable(RCC_GPIOC);
-    gpio_set_mode(GPIOC, GPIO_MODE_OUTPUT_2_MHZ, GPIO_CNF_OUTPUT_PUSHPULL, GPIO13);
-
+    set_all_pins_analog_in();
     init_gpio();
     init_timer();
     timer_enable_counter(TIM3);
     timer_enable_counter(TIM4);
 
-    set_color(OFF);
+    set_color(WARM);
     while (step_brightness(10)) // ramp up brightness
     {
         short_delay();
