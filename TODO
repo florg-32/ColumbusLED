@@ -1,0 +1,6 @@
+- set all unused pins to analog input (power save)
+- transisition between colors
+- non-linear fade
+- measure power usage
+- solder on wire stubs for +12V/GND
+- shield circuit board/build casing?
